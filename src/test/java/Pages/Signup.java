@@ -8,9 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Signup {
 
-
     WebDriver driver;
-
 
     @FindBy(xpath = "(//i[@class='ion-close-round'])[2]")
     WebElement popup;
@@ -32,7 +30,10 @@ public class Signup {
     @FindBy(xpath = "//input[contains(@name,'pwd')]")
     WebElement send_password;
 
-    @FindBy(id = "@FindBy(xpath = \"(//div[@role='presentation'])[1]\")")
+    @FindBy(xpath = "//iframe[@title=\"reCAPTCHA\"]")
+    WebElement captchaIframe;
+
+    @FindBy(xpath = "//span[@id=\"recaptcha-anchor\"]")
     WebElement captcha;
 
 
@@ -63,7 +64,9 @@ public String SignUp_With_Fst (String email, String password, String phone, Stri
     send_phone.sendKeys(phone);
     Thread.sleep(2000);
     send_password.sendKeys(password);
-    Thread.sleep(5000);
+    Thread.sleep(7000);
+    driver.switchTo().frame(captchaIframe);
+    Thread.sleep(3000);
     captcha.click();
     create_account.click();
     return Testassert.getText();
